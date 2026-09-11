@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond the KTU syllabus — your depth curriculum</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --navy:#16233B;
+  --blue:#2C5282;
+  --blue-soft:#5C7EA6;
+  --amber:#E3922B;
+  --green:#2F6B4E;
+  --danger:#B5533C;
+  --paper:#F4F2EC;
+  --card:#FFFFFF;
+  --ink:#1E2530;
+  --ink-soft:#57616F;
+  --border:#DCE1E8;
+  --line:#B9C4D0;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans', sans-serif;
+  font-size:16px;
+  line-height:1.55;
+}
+h1,h2,h3{font-family:'IBM Plex Serif', serif; margin:0 0 .3em 0; font-weight:600;}
+code, .mono{font-family:'IBM Plex Mono', monospace;}
+a{color:var(--blue);}
+p{margin:.4em 0 .9em 0;}
+section{scroll-margin-top:64px; max-width:980px; margin:0 auto; padding:48px 24px;}
+:focus-visible{outline:2px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+/* ---------- Hero ---------- */
+.hero{
+  background:var(--navy);
+  color:#fff;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 34px);
+  padding:56px 24px 40px 24px;
+}
+.hero-inner{max-width:980px; margin:0 auto;}
+.hero h1{font-size:2rem; color:#fff; max-width:720px;}
+.hero p.lede{color:#C9D4E3; max-width:640px; font-size:1.02rem;}
+.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+.chip{
+  border:1px solid rgba(255,255,255,0.28);
+  color:#DCE6F2;
+  padding:6px 12px;
+  border-radius:4px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:.78rem;
+}
+
+/* ---------- Sticky nav ---------- */
+nav.tabs{
+  position:sticky; top:0; z-index:50;
+  background:rgba(244,242,236,0.96);
+  backdrop-filter:blur(4px);
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;
+  white-space:nowrap;
+}
+nav.tabs .row{max-width:980px; margin:0 auto; padding:0 24px; display:flex; gap:6px;}
+nav.tabs a{
+  display:inline-block; padding:13px 14px; font-size:.88rem;
+  text-decoration:none; color:var(--ink-soft); font-weight:500;
+  border-bottom:2px solid transparent;
+}
+nav.tabs a:hover{color:var(--navy);}
+
+/* ---------- Section headers ---------- */
+.sec-head{border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:24px;}
+.sec-head h2{font-size:1.5rem; color:var(--navy);}
+.sec-head .sub{color:var(--ink-soft); font-size:.95rem; margin:0;}
+.sec-tag{font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--blue-soft); letter-spacing:.02em;}
+
+/* ---------- Overview diagram ---------- */
+.diagram-wrap{background:var(--card); border:1px solid var(--border); border-radius:6px; padding:16px;}
+.legend{display:flex; flex-wrap:wrap; gap:16px; margin-top:14px; font-size:.85rem; color:var(--ink-soft);}
+.legend span{display:inline-flex; align-items:center; gap:6px;}
+.swatch{width:12px; height:12px; border-radius:2px; display:inline-block;}
+
+.flow{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:20px 0;}
+.flow .step{
+  background:var(--card); border:1px solid var(--border); border-radius:5px;
+  padding:10px 14px; font-size:.86rem; font-weight:500; flex:1 1 150px; text-align:center;
+}
+.flow .arrow{color:var(--blue-soft); font-size:1.1rem;}
+
+/* ---------- Cards, generic ---------- */
+.card{background:var(--card); border:1px solid var(--border); border-radius:6px; padding:18px 20px; margin-bottom:14px;}
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;}
+@media (max-width:760px){ .grid-2, .grid-3{grid-template-columns:1fr;} }
+
+/* ---------- Calendar phase cards ---------- */
+.phase{border-left:4px solid var(--blue); padding-left:16px; margin-bottom:20px;}
+.phase.tier-deepwork{border-left-color:var(--blue-soft);}
+.phase.tier-gate{border-left-color:var(--amber);}
+.phase.tier-capstone{border-left-color:var(--green);}
+.phase .period{font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--ink-soft);}
+.phase h3{font-size:1.08rem; margin:.15em 0 .3em 0;}
+.priority-row{display:flex; gap:18px; font-size:.82rem; color:var(--ink-soft); margin-bottom:6px; flex-wrap:wrap;}
+.dots{letter-spacing:1px;}
+.phase ul{margin:.3em 0; padding-left:1.1em;}
+.phase .output{font-size:.9rem; color:var(--navy); margin-top:6px;}
+.phase .note{font-size:.85rem; color:var(--danger); margin-top:4px;}
+
+/* ---------- Syllabus pillar cards (details) ---------- */
+details.pillar{
+  background:var(--card); border:1px solid var(--border); border-left:4px solid var(--blue);
+  border-radius:6px; margin-bottom:12px; padding:0;
+}
+details.pillar[open]{padding-bottom:14px;}
+details.pillar.highlight-amber{border-left-color:var(--amber);}
+details.pillar.highlight-green{border-left-color:var(--green);}
+details.pillar summary{
+  list-style:none; cursor:pointer; padding:14px 18px; display:flex; align-items:center; gap:12px;
+  font-weight:600; font-size:1rem;
+}
+details.pillar summary::-webkit-details-marker{display:none;}
+details.pillar summary::before{content:"▸"; color:var(--blue-soft); transition:transform .15s ease;}
+details.pillar[open] summary::before{transform:rotate(90deg);}
+.p-code{font-family:'IBM Plex Mono',monospace; font-size:.75rem; color:#fff; background:var(--blue); padding:2px 7px; border-radius:3px;}
+details.pillar.highlight-amber .p-code{background:var(--amber); color:var(--navy);}
+details.pillar.highlight-green .p-code{background:var(--green);}
+.tier-badge{font-size:.72rem; font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); margin-left:auto; padding-right:4px;}
+.pillar-body{padding:0 18px; font-size:.94rem;}
+.pillar-body ul{margin:.4em 0; padding-left:1.2em;}
+.pillar-body .resource-line{color:var(--ink-soft); font-size:.87rem; margin-top:8px;}
+.tier-legend{display:flex; flex-wrap:wrap; gap:16px; font-size:.82rem; color:var(--ink-soft); margin-bottom:18px;}
+
+/* ---------- Resource cards ---------- */
+.res-card{background:var(--card); border:1px solid var(--border); border-radius:6px; padding:14px 16px; margin-bottom:10px;}
+.res-card .title{font-weight:600; font-size:.98rem;}
+.res-card .meta{font-size:.82rem; color:var(--ink-soft); margin:2px 0 6px 0;}
+.res-card p{margin:4px 0 0 0; font-size:.9rem;}
+
+/* ---------- Table ---------- */
+table{width:100%; border-collapse:collapse; font-size:.88rem; margin:16px 0;}
+th, td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--border);}
+th{font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:.76rem; color:var(--ink-soft); text-transform:none;}
+
+/* ---------- Strengths / risks ---------- */
+.adv{border-left:4px solid var(--green);}
+.risk{border-left:4px solid var(--danger);}
+.adv, .risk{padding:14px 18px; background:var(--card); border-radius:6px; margin-bottom:12px; border-top:1px solid var(--border); border-right:1px solid var(--border); border-bottom:1px solid var(--border);}
+.adv h3, .risk h3{font-size:.98rem; margin-bottom:4px;}
+.adv p, .risk p{font-size:.9rem; margin:0;}
+
+/* ---------- Progress log ---------- */
+.group-title{font-size:.85rem; font-weight:600; color:var(--navy); margin:22px 0 8px 0; font-family:'IBM Plex Mono',monospace;}
+.item{display:flex; align-items:flex-start; gap:10px; padding:7px 0; border-bottom:1px dashed var(--border); font-size:.92rem;}
+.item input[type=checkbox]{margin-top:3px; width:16px; height:16px; accent-color:var(--green); flex-shrink:0;}
+.item .item-label{flex:1;}
+.item .stamp{font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--green); white-space:nowrap;}
+.summary-bar{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:14px 18px; margin-bottom:20px;}
+.summary-bar .count{font-family:'IBM Plex Mono',monospace; font-size:1.05rem; color:var(--navy); font-weight:500;}
+.bar-track{height:8px; background:var(--border); border-radius:4px; flex:1; min-width:120px; margin:0 16px; overflow:hidden;}
+.bar-fill{height:100%; background:var(--green); width:0%;}
+button.reset-btn{
+  background:none; border:1px solid var(--danger); color:var(--danger); padding:7px 12px;
+  border-radius:4px; font-size:.8rem; cursor:pointer; font-family:'IBM Plex Sans',sans-serif;
+}
+button.reset-btn:hover{background:var(--danger); color:#fff;}
+.activity-log{margin-top:26px;}
+.activity-log ul{list-style:none; padding:0; margin:0; font-size:.88rem;}
+.activity-log li{padding:6px 0; border-bottom:1px dashed var(--border); display:flex; justify-content:space-between; gap:10px;}
+.activity-log .when{font-family:'IBM Plex Mono',monospace; color:var(--green); white-space:nowrap;}
+.storage-note{font-size:.8rem; color:var(--ink-soft); margin-top:6px;}
+
+footer{text-align:center; padding:40px 24px 60px 24px; color:var(--ink-soft); font-size:.82rem;}
+footer a{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Beyond the KTU syllabus</h1>
+    <p class="lede">A depth curriculum for your CSE major, EC minor, and Honours — built to bring you close to what a strong MIT undergraduate would actually cover, on a timeline that fits your real semesters.</p>
+    <div class="chips">
+      <span class="chip">Generated 10 Sep 2026</span>
+      <span class="chip">B.Tech CSE 2025–29 · KTU · EC Minor + Honours</span>
+      <span class="chip">Runs to May 2029</span>
+    </div>
+  </div>
+</div>
+
+<nav class="tabs">
+  <div class="row">
+    <a href="#overview">Overview</a>
+    <a href="#calendar">Calendar</a>
+    <a href="#syllabus">Syllabus</a>
+    <a href="#resources">Resources</a>
+    <a href="#gate">GATE &amp; M.Tech</a>
+    <a href="#edge">Strengths &amp; risks</a>
+    <a href="#log">Progress log</a>
+  </div>
+</nav>
+
+<!-- ======================= OVERVIEW ======================= -->
+<section id="overview">
+  <div class="sec-head">
+    <span class="sec-tag">01 — READ THIS FIRST</span>
+    <h2>How this fits together</h2>
+    <p class="sub">One structure, not three separate syllabi.</p>
+  </div>
+
+  <p>Your CSE major, EC minor, and Honours ambitions aren't three things to juggle — they feed into the same nine learning pillars below, which then feed into one portfolio. This page is that structure laid out: what to learn, in what order, using which resources, on what dates, with an honest account of what's genuinely in your favour and what could quietly derail it.</p>
+
+  <p>One honesty check up front: MIT's own CSE degree isn't just "harder subjects" — it's programming, software construction, discrete math, algorithms, systems, low-level programming, and probability/linear algebra, taken together, followed by a specialisation and independent research. You won't become an MIT graduate by watching MIT lecture videos. The realistic goal is this: build an undergraduate education whose depth, rigor, and independent work would let you solve what a strong MIT student could solve — using MIT's own open material as the yardstick, not the credential.</p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram: CSE Major, EC Minor and Honours feed into nine learning pillars, which converge into a portfolio of flagship projects, research, and a GATE or M.Tech option.">
+      <!-- connectors -->
+      <g stroke="#B9C4D0" stroke-width="2" fill="none">
+        <line x1="235" y1="70" x2="235" y2="95"/>
+        <line x1="450" y1="70" x2="450" y2="95"/>
+        <line x1="665" y1="70" x2="665" y2="95"/>
+        <line x1="235" y1="95" x2="665" y2="95"/>
+        <line x1="450" y1="95" x2="450" y2="110"/>
+
+        <line x1="450" y1="154" x2="450" y2="180"/>
+        <line x1="170" y1="180" x2="730" y2="180"/>
+        <line x1="170" y1="180" x2="170" y2="200"/>
+        <line x1="450" y1="180" x2="450" y2="200"/>
+        <line x1="730" y1="180" x2="730" y2="200"/>
+
+        <line x1="170" y1="250" x2="170" y2="270"/>
+        <line x1="450" y1="250" x2="450" y2="270"/>
+        <line x1="730" y1="250" x2="730" y2="270"/>
+
+        <line x1="170" y1="320" x2="170" y2="340"/>
+        <line x1="450" y1="320" x2="450" y2="340"/>
+        <line x1="730" y1="320" x2="730" y2="340"/>
+
+        <line x1="170" y1="390" x2="170" y2="415"/>
+        <line x1="450" y1="390" x2="450" y2="415"/>
+        <line x1="730" y1="390" x2="730" y2="415"/>
+        <line x1="170" y1="415" x2="730" y2="415"/>
+        <line x1="450" y1="415" x2="450" y2="440"/>
+      </g>
+
+      <!-- input boxes -->
+      <g font-family="IBM Plex Sans, sans-serif">
+        <rect x="140" y="20" width="190" height="50" rx="6" fill="#16233B"/>
+        <text x="235" y="50" fill="#fff" font-size="14" font-weight="600" text-anchor="middle">CSE major</text>
+
+        <rect x="355" y="20" width="190" height="50" rx="6" fill="#16233B"/>
+        <text x="450" y="50" fill="#fff" font-size="14" font-weight="600" text-anchor="middle">EC minor</text>
+
+        <rect x="570" y="20" width="190" height="50" rx="6" fill="#16233B"/>
+        <text x="665" y="50" fill="#fff" font-size="14" font-weight="600" text-anchor="middle">Honours track</text>
+
+        <!-- spine -->
+        <rect x="300" y="110" width="300" height="44" rx="6" fill="#2C5282"/>
+        <text x="450" y="137" fill="#fff" font-size="14" font-weight="600" text-anchor="middle">9 learning pillars</text>
+
+        <!-- row 0 -->
+        <rect x="40" y="200" width="260" height="50" rx="6" fill="#2C5282"/>
+        <text x="52" y="216" fill="#DCE6F2" font-size="10" class="mono">P1</text>
+        <text x="170" y="232" fill="#fff" font-size="13" font-weight="600" text-anchor="middle">Mathematics</text>
+
+        <rect x="320" y="200" width="260" height="50" rx="6" fill="#2C5282"/>
+        <text x="332" y="216" fill="#DCE6F2" font-size="10" class="mono">P2</text>
+        <text x="450" y="232" fill="#fff" font-size="13" font-weight="600" text-anchor="middle">Programming</text>
+
+        <rect x="600" y="200" width="260" height="50" rx="6" fill="#2C5282"/>
+        <text x="612" y="216" fill="#DCE6F2" font-size="10" class="mono">P3</text>
+        <text x="730" y="232" fill="#fff" font-size="13" font-weight="600" text-anchor="middle">Algorithms</text>
+
+        <!-- row 1 -->
+        <rect x="40" y="270" width="260" height="50" rx="6" fill="#2C5282"/>
+        <text x="52" y="286" fill="#DCE6F2" font-size="10" class="mono">P4</text>
+        <text x="170" y="302" fill="#fff" font-size="13" font-weight="600" text-anchor="middle">Systems</text>
+
+        <rect x="320" y="270" width="260" height="50" rx="6" fill="#E3922B"/>
+        <text x="332" y="286" fill="#16233B" font-size="10" class="mono">P5</text>
+        <text x="450" y="302" fill="#16233B" font-size="13" font-weight="700" text-anchor="middle">AI</text>
+
+        <rect x="600" y="270" width="260" height="50" rx="6" fill="#2C5282"/>
+        <text x="612" y="286" fill="#DCE6F2" font-size="10" class="mono">P6</text>
+        <text x="730" y="302" fill="#fff" font-size="13" font-weight="600" text-anchor="middle">Security</text>
+
+        <!-- row 2 -->
+        <rect x="40" y="340" width="260" height="50" rx="6" fill="#2F6B4E"/>
+        <text x="52" y="356" fill="#DCEFE2" font-size="10" class="mono">P7</text>
+        <text x="170" y="372" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">EC / Embedded</text>
+
+        <rect x="320" y="340" width="260" height="50" rx="6" fill="#2C5282"/>
+        <text x="332" y="356" fill="#DCE6F2" font-size="10" class="mono">P8</text>
+        <text x="450" y="372" fill="#fff" font-size="13" font-weight="600" text-anchor="middle">Engineering practice</text>
+
+        <rect x="600" y="340" width="260" height="50" rx="6" fill="#2C5282"/>
+        <text x="612" y="356" fill="#DCE6F2" font-size="10" class="mono">P9</text>
+        <text x="730" y="372" fill="#fff" font-size="13" font-weight="600" text-anchor="middle">Research</text>
+
+        <!-- output -->
+        <rect x="200" y="440" width="500" height="75" rx="6" fill="#16233B"/>
+        <text x="450" y="470" fill="#fff" font-size="14" font-weight="600" text-anchor="middle">8 flagship projects + research</text>
+        <text x="450" y="492" fill="#C9D4E3" font-size="13" text-anchor="middle">→ GATE / M.Tech, or straight into industry</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <span><span class="swatch" style="background:#2C5282;"></span>Core pillar</span>
+      <span><span class="swatch" style="background:#E3922B;"></span>Your signature pillar — AI</span>
+      <span><span class="swatch" style="background:#2F6B4E;"></span>Your signature pillar — EC / Embedded</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px;">The loop to run for every topic</h3>
+  <p class="sub" style="color:var(--ink-soft); margin-top:-8px;">Don't run all nine pillars at once — run this loop, one topic at a time.</p>
+  <div class="flow">
+    <div class="step">KTU class</div>
+    <div class="arrow">→</div>
+    <div class="step">KTU exam prep</div>
+    <div class="arrow">→</div>
+    <div class="step">Advanced resource</div>
+    <div class="arrow">→</div>
+    <div class="step">Build it</div>
+    <div class="arrow">→</div>
+    <div class="step">Log it below</div>
+  </div>
+  <p>That last step is deliberate: the <a href="#log">progress log</a> stamps the date the moment you check something off, so six months from now you can see exactly what you learned this week versus what you learned back in S3 — instead of one undated wall of topics.</p>
+</section>
+
+<!-- ======================= CALENDAR ======================= -->
+<section id="calendar">
+  <div class="sec-head">
+    <span class="sec-tag">02 — TIMELINE</span>
+    <h2>Academic calendar, Sept 2026 → May 2029</h2>
+    <p class="sub">Mapped to your real semesters. KTU's own exam calendar will shift by a few weeks each year — treat these as planning windows, not fixed dates.</p>
+  </div>
+
+  <div class="phase">
+    <div class="period">Sept 2026 – Dec 2026 · S3</div>
+    <h3>Foundation upgrade</h3>
+    <div class="priority-row"><span>KTU priority <span class="dots">●●●●●</span></span><span>Depth layer <span class="dots">●●●</span></span></div>
+    <ul><li>C/C++ fluency, first 100 DSA problems</li><li>Discrete math: logic, sets, proofs, induction</li><li>Circuits &amp; digital logic (EC minor)</li><li>Git + Linux shell as a daily habit, not a one-off tutorial</li></ul>
+    <div class="output">Output: algorithm visualiser v1 · 100+ DSA problems · a cleaned-up GitHub</div>
+  </div>
+
+  <div class="phase">
+    <div class="period">Jan 2027 – Apr 2027 · S4</div>
+    <h3>Programming + embedded</h3>
+    <div class="priority-row"><span>KTU priority <span class="dots">●●●●●</span></span><span>Depth layer <span class="dots">●●●●</span></span></div>
+    <ul><li>Advanced DSA, OOP in Java/C++</li><li>DBMS foundations</li><li>Embedded C, STM32, digital logic depth</li></ul>
+    <div class="output">Output: smart embedded device v1 — the groundwork for the assistive-navigation upgrade below</div>
+  </div>
+
+  <div class="phase tier-deepwork">
+    <div class="period">May 2027 – Jul 2027 · Summer</div>
+    <h3>Deep work: algorithms + architecture</h3>
+    <ul><li>MIT 6.006 end-to-end (lectures, notes, problem sets)</li><li>MIT 6.004 basics, assembly</li></ul>
+    <div class="output">Output: a simple CPU / architecture mini-project</div>
+  </div>
+
+  <div class="phase">
+    <div class="period">Aug 2027 – Dec 2027 · S5</div>
+    <h3>Systems</h3>
+    <div class="priority-row"><span>KTU priority <span class="dots">●●●●●</span></span><span>Depth layer <span class="dots">●●●●</span></span></div>
+    <ul><li>Operating systems, DBMS depth, computer networks</li><li>Communication systems, DSP (EC minor)</li></ul>
+    <div class="output">Output: a MiniDB + a small network application</div>
+    <div class="note">GATE 2028 registration opens around this time — see the GATE tab for whether an early trial attempt makes sense for you.</div>
+  </div>
+
+  <div class="phase tier-deepwork">
+    <div class="period">Dec 2027 – Jan 2028 · Winter break</div>
+    <h3>Deep work: xv6 + RISC-V</h3>
+    <ul><li>MIT 6.1810 labs</li><li>Modify xv6 — a scheduler, syscall, or filesystem feature, not just an install</li></ul>
+    <div class="output">Output: your own xv6 fork with one real feature added</div>
+  </div>
+
+  <div class="phase tier-gate">
+    <div class="period">Feb 2028</div>
+    <h3>GATE 2028 — optional trial</h3>
+    <p style="font-size:.9rem; margin:6px 0 0 0;">You become eligible the moment you're in your 3rd year. Treat this one as pure exposure to the format under real exam pressure — not a result that defines anything. Skip it if S6 is already full.</p>
+  </div>
+
+  <div class="phase">
+    <div class="period">Jan 2028 – Apr 2028 · S6</div>
+    <h3>Intelligence + security</h3>
+    <div class="priority-row"><span>KTU priority <span class="dots">●●●●●</span></span><span>Depth layer <span class="dots">●●●●</span></span></div>
+    <ul><li>Classical ML → neural networks (MIT 6.036)</li><li>Security fundamentals</li><li>Distributed systems basics</li></ul>
+    <div class="output">Output: an AI + embedded prototype</div>
+  </div>
+
+  <div class="phase tier-deepwork">
+    <div class="period">May 2028 – Jul 2028 · Summer</div>
+    <h3>Research phase</h3>
+    <ul><li>ML mathematics, deep learning</li><li>FPGA, TinyML</li><li>Reproduce one real paper end to end</li></ul>
+    <div class="output">Output: a written research reproduction</div>
+  </div>
+
+  <div class="phase">
+    <div class="period">Aug 2028 – Dec 2028 · S7</div>
+    <h3>Specialisation</h3>
+    <div class="priority-row"><span>KTU priority <span class="dots">●●●●●</span></span><span>Depth layer <span class="dots">●●●●●</span></span></div>
+    <ul><li>Edge AI, computer architecture depth</li><li>Embedded Linux, FPGA, distributed systems</li></ul>
+    <div class="output">Output: a research-grade flagship project</div>
+    <div class="note">GATE 2029 registration opens around Aug–Sept 2028 — this is your main, serious attempt. Register.</div>
+  </div>
+
+  <div class="phase tier-gate">
+    <div class="period">Jan 2029 – Feb 2029</div>
+    <h3>GATE 2029 — main attempt</h3>
+    <p style="font-size:.9rem; margin:6px 0 0 0;">Full-focus month: mock tests and revision only, drawing on the systems + algorithms depth you already built in S5–S7. No new topics this month.</p>
+  </div>
+
+  <div class="phase tier-capstone">
+    <div class="period">Jan 2029 – May 2029 · S8</div>
+    <h3>Capstone + career</h3>
+    <div class="priority-row"><span>KTU priority <span class="dots">●●●●●</span></span><span>Depth layer <span class="dots">●●●●●</span></span></div>
+    <ul><li>Flagship project polish, research report</li><li>System design + technical writing for interviews</li><li>COAP/CCMT applications if pursuing M.Tech, or placement prep if going straight to industry</li></ul>
+    <div class="output">Output: final portfolio of 8 repositories, a research report, and a decision on GATE-M.Tech vs. industry</div>
+  </div>
+</section>
+
+<!-- ======================= SYLLABUS ======================= -->
+<section id="syllabus">
+  <div class="sec-head">
+    <span class="sec-tag">03 — CURRICULUM</span>
+    <h2>The nine pillars</h2>
+    <p class="sub">Tap any pillar to open it. Your KTU coursework is the spine — these are the topics, resources, and depth to add on top.</p>
+  </div>
+
+  <div class="tier-legend">
+    <span><strong>Must</strong> — degree- and career-critical</span>
+    <span><strong>Core</strong> — the MIT-depth layer that differentiates you</span>
+    <span><strong>Support</strong> — enables your specialisation</span>
+    <span><strong>Optional</strong> — only once the above are solid</span>
+  </div>
+
+  <details class="pillar" open>
+    <summary><span class="p-code">P1</span> Mathematics <span class="tier-badge">MUST</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Discrete math: logic, sets, relations, functions, proofs, induction, recursion</li>
+        <li>Graph theory &amp; combinatorics</li>
+        <li>Probability</li>
+        <li>Linear algebra, plus enough calculus/optimisation to follow ML later</li>
+      </ul>
+      <div class="resource-line">Primary resource: MIT 6.042 (Math for CS), 18.06 (Linear Algebra), 6.041 (Probability) — see Resources tab.</div>
+    </div>
+  </details>
+
+  <details class="pillar">
+    <summary><span class="p-code">P2</span> Programming <span class="tier-badge">MUST</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>C, Python, Java, C++ — enough to be fluent, not just "familiar"</li>
+        <li>Git and the Linux shell as daily tools, not exam topics</li>
+        <li>Clean code and debugging discipline</li>
+      </ul>
+      <div class="resource-line">Primary resource: your KTU programming labs + K&amp;R's "The C Programming Language" as a reference.</div>
+    </div>
+  </details>
+
+  <details class="pillar">
+    <summary><span class="p-code">P3</span> Algorithms <span class="tier-badge">MUST</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Arrays, linked lists, stacks, queues, trees, heaps, hash tables</li>
+        <li>Graphs: BFS, DFS, shortest paths, Dijkstra, Bellman-Ford</li>
+        <li>Sorting, searching, recursion, complexity analysis (Big-O)</li>
+        <li>Dynamic programming</li>
+      </ul>
+      <div class="resource-line">Primary resource: MIT 6.006, with CLRS as the reference text. This is also the highest-weight GATE CS section — see the GATE tab.</div>
+    </div>
+  </details>
+
+  <details class="pillar">
+    <summary><span class="p-code">P4</span> Systems <span class="tier-badge">MUST</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Computer organisation, assembly basics</li>
+        <li>OS: processes, threads, scheduling, virtual memory, file systems, syscalls</li>
+        <li>DBMS: relational algebra, indexing, transactions, query optimisation</li>
+        <li>Networks: sockets, TCP, HTTP, DNS, routing basics</li>
+      </ul>
+      <div class="resource-line">Primary resource: MIT 6.004 and 6.1810, "Operating Systems: Three Easy Pieces" (free), Silberschatz for DB.</div>
+    </div>
+  </details>
+
+  <details class="pillar highlight-amber">
+    <summary><span class="p-code">P5</span> AI <span class="tier-badge">MUST — your signature pillar</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Linear/logistic regression, decision trees, SVM, clustering, PCA</li>
+        <li>Neural networks, CNNs</li>
+        <li>Transformers and attention, the basics of generative AI</li>
+        <li>Edge AI / TinyML — running models on the microcontrollers from your EC minor</li>
+      </ul>
+      <div class="resource-line">Primary resource: MIT 6.036. Rule: implement gradient descent and a small neural net by hand once before reaching for a library.</div>
+    </div>
+  </details>
+
+  <details class="pillar">
+    <summary><span class="p-code">P6</span> Security <span class="tier-badge">SUPPORT</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Cryptography and authentication basics</li>
+        <li>Network and web security</li>
+        <li>Buffer overflows, binary analysis, OS/IoT hardware security — enough to secure your own embedded projects</li>
+      </ul>
+      <div class="resource-line">Primary resource: course notes + practice on picoCTF-style exercises.</div>
+    </div>
+  </details>
+
+  <details class="pillar highlight-green">
+    <summary><span class="p-code">P7</span> EC / Embedded <span class="tier-badge">MUST — your signature pillar</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Digital logic and circuits</li>
+        <li>Microcontrollers: Arduino → ESP32 → STM32, bare-metal C</li>
+        <li>Communication protocols: UART, I2C, SPI, BLE</li>
+        <li>RTOS basics, PCB basics, an introduction to FPGA and RISC-V</li>
+      </ul>
+      <div class="resource-line">Primary resource: your MNECT minor courses, STM32 vendor docs, and hands-on hardware — this is where you build the CSE+EC edge most classmates don't have.</div>
+    </div>
+  </details>
+
+  <details class="pillar">
+    <summary><span class="p-code">P8</span> Engineering practice <span class="tier-badge">SUPPORT</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Software architecture, testing discipline</li>
+        <li>Linux, Docker, one cloud provider, CI/CD</li>
+        <li>REST/gRPC, message queues, monitoring, documentation habits</li>
+      </ul>
+      <div class="resource-line">Primary resource: official docs of the tools you actually use in your own projects — don't collect certificates for this pillar, collect a deployed project.</div>
+    </div>
+  </details>
+
+  <details class="pillar">
+    <summary><span class="p-code">P9</span> Research <span class="tier-badge">CORE</span></summary>
+    <div class="pillar-body">
+      <ul>
+        <li>Reading papers: one per semester from S5, two from S6</li>
+        <li>Reproducing a result, not just summarising it</li>
+        <li>One real research project in your final year</li>
+      </ul>
+      <div class="resource-line">Primary resource: arXiv, Google Scholar, IEEE Xplore, ACM Digital Library.</div>
+    </div>
+  </details>
+
+  <p style="margin-top:18px; font-size:.9rem; color:var(--ink-soft);"><strong>Optional, time-permitting:</strong> compiler theory, distributed systems beyond the basics, advanced cloud, quantum computing. Only after the pillars above are solid — not before.</p>
+</section>
+
+<!-- ======================= RESOURCES ======================= -->
+<section id="resources">
+  <div class="sec-head">
+    <span class="sec-tag">04 — LIBRARY</span>
+    <h2>Resource library</h2>
+    <p class="sub">A small, verified set — not a hundred bookmarked courses you'll never finish.</p>
+  </div>
+
+  <h3>MIT OpenCourseWare — the depth layer</h3>
+  <div class="res-card"><div class="title">6.006 — Introduction to Algorithms</div><div class="meta">Erik Demaine, Jason Ku, Justin Solomon · <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>Lectures, notes, and problem sets — the direct match for pillar P3, and for GATE's Algorithms section.</p></div>
+  <div class="res-card"><div class="title">6.1810 — Operating System Engineering</div><div class="meta">Robert Morris, Adam Belay · <a href="https://ocw.mit.edu/courses/6-1810-operating-system-engineering-fall-2023/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>Hands-on xv6 labs on RISC-V — pillar P4's systems core.</p></div>
+  <div class="res-card"><div class="title">6.036 — Introduction to Machine Learning</div><div class="meta">Kaelbling, Lozano-Pérez, Chuang, Boning · <a href="https://ocw.mit.edu/courses/6-036-introduction-to-machine-learning-fall-2020/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>Modelling, prediction, supervised and reinforcement learning — pillar P5.</p></div>
+  <div class="res-card"><div class="title">6.004 — Computation Structures</div><div class="meta"><a href="https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>Digital system architecture, from gates up — bridges P4 and your EC minor's P7.</p></div>
+  <div class="res-card"><div class="title">6.042 — Mathematics for Computer Science</div><div class="meta"><a href="https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>Discrete math, proofs, probability — do this before 6.006, not after.</p></div>
+  <div class="res-card"><div class="title">18.06 — Linear Algebra</div><div class="meta">Gilbert Strang · <a href="https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>The classic — needed before P5 goes beyond the basics.</p></div>
+  <div class="res-card"><div class="title">6.041 — Probabilistic Systems Analysis</div><div class="meta">John Tsitsiklis · <a href="https://ocw.mit.edu/courses/6-041sc-probabilistic-systems-analysis-and-applied-probability-fall-2013/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>Rigorous probability — underpins both algorithms and ML.</p></div>
+  <div class="res-card"><div class="title">Browse the full catalogue</div><div class="meta"><a href="https://ocw.mit.edu/" target="_blank" rel="noopener">ocw.mit.edu</a></div><p>Over 2,500 free MIT courses when you want to go beyond this list.</p></div>
+
+  <h3 style="margin-top:26px;">Free books &amp; source you can actually open</h3>
+  <div class="res-card"><div class="title">Operating Systems: Three Easy Pieces</div><div class="meta">Arpaci-Dusseau &amp; Arpaci-Dusseau · <a href="https://ostep.org" target="_blank" rel="noopener">ostep.org</a></div><p>The best free companion to 6.1810 — read alongside the xv6 labs.</p></div>
+  <div class="res-card"><div class="title">xv6-riscv — source + book</div><div class="meta">MIT PDOS · <a href="https://github.com/mit-pdos/xv6-riscv" target="_blank" rel="noopener">github.com/mit-pdos/xv6-riscv</a></div><p>The actual teaching OS you'll be modifying in the winter-2027 deep-work block.</p></div>
+  <div class="res-card"><div class="title">NPTEL</div><div class="meta"><a href="https://nptel.ac.in" target="_blank" rel="noopener">nptel.ac.in</a></div><p>India's own free open-courseware, taught by IIT/IISc faculty — often maps directly onto the GATE syllabus, and a good second angle on the same P3/P4 topics.</p></div>
+  <div class="res-card"><div class="title">Reference books, KTU library / your own copy</div><div class="meta">No link needed — these are standard print/PDF references</div><p>CLRS (<em>Introduction to Algorithms</em>) for P3 · K&amp;R (<em>The C Programming Language</em>) for P2 · Patterson &amp; Hennessy (<em>Computer Organization and Design</em>) for P4 · Kurose &amp; Ross (<em>Computer Networking: A Top-Down Approach</em>) for P4 · Silberschatz, Korth &amp; Sudarshan (<em>Database System Concepts</em>) for P4 · Goodfellow, Bengio &amp; Courville (<em>Deep Learning</em>) for P5.</p></div>
+
+  <h3 style="margin-top:26px;">Practice</h3>
+  <div class="res-card"><p style="margin:0;">LeetCode / Codeforces for P3 · Kaggle for P5 · picoCTF-style challenges for P6 · previous years' official GATE question papers, downloadable from the GOAPS portal once results open each March, for exam-format practice.</p></div>
+</section>
+
+<!-- ======================= GATE & M.TECH ======================= -->
+<section id="gate">
+  <div class="sec-head">
+    <span class="sec-tag">05 — POSTGRAD ROUTE</span>
+    <h2>GATE &amp; M.Tech at a top university</h2>
+    <p class="sub">Not mandatory — but the systems and algorithms depth you're already building doubles as most of the syllabus, so it's worth understanding the route even before deciding to take it.</p>
+  </div>
+
+  <p>GATE (the Graduate Aptitude Test in Engineering) is the national exam, jointly run by IISc and the IITs, that most Indian M.Tech admissions and PSU recruitment run through. IIT Madras is organising the GATE 2027 cycle. As a live reference point: registration for GATE 2027 opened in early September 2026 and closes 27 September 2026 (late fee until 5 October 2026); the exam itself runs 6, 7, 13, 14, 20 and 21 February 2027, with results expected around 19 March 2027. Eligibility only requires being in the 3rd year of your degree or higher, with no age limit and no cap on attempts — dates shift by a few weeks each year, so check the official site nearer your own attempt.</p>
+
+  <div class="card">
+    <strong>Where this lands on your calendar:</strong> you become eligible the moment you enter your 3rd year (S5), which makes <strong>GATE 2028</strong> your earliest possible attempt — worth doing once, purely as a low-pressure trial run. <strong>GATE 2029</strong>, sat in S8 right before you graduate, is the one to prepare seriously for, since a good score there lets you apply straight into an M.Tech seat the same year.
+  </div>
+
+  <h3 style="margin-top:26px;">The syllabus overlap is already in your favour</h3>
+  <p>The GATE CS paper is General Aptitude + Engineering Mathematics, plus nine core sections: Programming &amp; Data Structures, Algorithms, Theory of Computation, Digital Logic, Computer Organisation &amp; Architecture, Operating Systems, Databases, Computer Networks, and Compiler Design. That list is close to a direct match for pillars <strong>P1, P3, and P4</strong> above. If you actually build the depth in those three pillars on schedule, GATE prep in S8 becomes drilling speed and MCQ technique on material you already know — not learning it from zero.</p>
+
+  <h3 style="margin-top:26px;">What a competitive score looks like</h3>
+  <table>
+    <tr><th>Institute</th><th>Typical GATE score needed*</th><th>Notes</th></tr>
+    <tr><td>IISc Bangalore</td><td>~880+ (out of 1000)</td><td>Usually top 50–100 All-India Rank; a written test/interview follows shortlisting</td></tr>
+    <tr><td>IIT Bombay / Delhi / Madras</td><td>~750–870+</td><td>Consistently the highest-demand IITs for CSE</td></tr>
+    <tr><td>IIT Kanpur / Kharagpur / Guwahati / Roorkee / Hyderabad</td><td>~600–750</td><td>Still excellent, somewhat less competitive</td></tr>
+    <tr><td>IIIT Hyderabad and similar top IIITs</td><td>~650–750</td><td>Not an IIT, but often rated above older IITs for CSE/AI, with strong industry ties</td></tr>
+    <tr><td>Top NITs (Trichy, Warangal, Surathkal, etc.)</td><td>~600–850 (≈40–45+ marks)</td><td>Counselled separately, via CCMT</td></tr>
+  </table>
+  <p style="font-size:.85rem; color:var(--ink-soft); margin-top:-8px;">*Figures move a little every year with paper difficulty and applicant pool — treat this as a planning reference and re-check closer to results.</p>
+
+  <p>Counselling runs through two portals after results: <strong>COAP</strong> for IITs and IISc, <strong>CCMT</strong> for NITs, IIITs, and other centrally-funded institutes. Both open shortly after results, around late March.</p>
+
+  <p style="margin-top:18px;">One balance note: GATE-to-M.Tech is the standard route, but it isn't the only one. A strong research portfolio can also lead to direct BTech-to-PhD tracks, and an MS abroad via GRE/TOEFL is a parallel path some of your classmates will take instead. Nothing here forces the decision now — S7's flagship project and S8's GATE attempt keep every door open at once.</p>
+
+  <div class="card" style="margin-top:10px;">
+    <strong>Official source for anything above:</strong> <a href="https://gate2027.iitm.ac.in" target="_blank" rel="noopener">gate2027.iitm.ac.in</a>
+  </div>
+</section>
+
+<!-- ======================= STRENGTHS & RISKS ======================= -->
+<section id="edge">
+  <div class="sec-head">
+    <span class="sec-tag">06 — HONEST ACCOUNT</span>
+    <h2>Your strengths, and what could actually derail this</h2>
+    <p class="sub">Both sides, without either flattering you or scaring you.</p>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-size:1.05rem; color:var(--green);">Working in your favour</h3>
+      <div class="adv"><h3>Three years of runway</h3><p>You're at the very start of this, not scrambling in S7. Used consistently, three years is a lot of compounding.</p></div>
+      <div class="adv"><h3>CSE + EC is a genuinely rare combination</h3><p>Most CSE students never touch hardware. Your minor opens embedded, IoT, edge-AI, robotics and computer-architecture doors that pure-software classmates can't credibly claim.</p></div>
+      <div class="adv"><h3>You're not starting from zero</h3><p>Arduino/HC-SR04, GitHub Pages, hackathons, coding club, early ML and web work — the next step is depth, not "learn to code."</p></div>
+      <div class="adv"><h3>A public-profile instinct</h3><p>Your GitHub/LinkedIn habit is an asset once redirected toward substance over decoration.</p></div>
+      <div class="adv"><h3>Real ambition</h3><p>Wanting IIT/MIT-level depth from KMEA is an advantage exactly when it's converted into daily execution rather than anxiety.</p></div>
+    </div>
+    <div>
+      <h3 style="font-size:1.05rem; color:var(--danger);">Real risks to manage</h3>
+      <div class="risk"><h3>Scope explosion</h3><p>CSE + EC + AI + security + cloud + embedded + FPGA + web + Unity, all at once, produces familiarity with everything and mastery of nothing. Pick one primary (AI + Systems), one supporting (EC/Embedded), one secondary (Security) — everything else waits.</p></div>
+      <div class="risk"><h3>Certificate collection</h3><p>35 certificates and 3 shallow projects reads weaker than 8 finished, documented projects. Only take a certificate if it produces a project or fills a specific gap.</p></div>
+      <div class="risk"><h3>Presentation over substance</h3><p>A polished GitHub README is a garnish, not the meal. Aim for roughly 80% technical substance, 20% presentation — not the reverse.</p></div>
+      <div class="risk"><h3>Measuring yourself against the wrong thing</h3><p>The useful question isn't "am I MIT-level" — it's "can I solve what a strong MIT or IIT student could solve." That's measurable; the first one isn't, and it just breeds anxiety.</p></div>
+      <div class="risk"><h3>An unsustainable schedule</h3><p>2–3 extra hours a day on top of a full KTU courseload is already a lot. Don't add more without cutting something else first — this plan only works if you can keep it up for three years, not three weeks.</p></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px;">Turning this into a profile</h3>
+  <div class="card">
+    <strong>GitHub — 6 to 8 flagship repos, not 50 unfinished ones:</strong>
+    <ol style="margin:8px 0 0 0; padding-left:1.2em; font-size:.92rem;">
+      <li>Algorithm visualiser</li>
+      <li>Mini compiler/interpreter</li>
+      <li>MiniDB</li>
+      <li>Modified xv6</li>
+      <li>Simple CPU / RISC-V project</li>
+      <li>An embedded/EC flagship (your assistive-navigation device)</li>
+      <li>An Edge-AI project</li>
+      <li>Your final research project</li>
+    </ol>
+  </div>
+  <div class="card">
+    <strong>Internship arc:</strong> coding/web/research-assistant roles early (Y1–Y2) → backend/embedded/AI/security roles mid-course (Y2–Y3) → serious SWE, AI-engineering, systems, or embedded/edge-AI roles by S7–S8, where the EC minor becomes your differentiator for embedded and IoT-specific internships most CSE students can't credibly apply for.
+  </div>
+</section>
+
+<!-- ======================= PROGRESS LOG ======================= -->
+<section id="log">
+  <div class="sec-head">
+    <span class="sec-tag">07 — TRACKER</span>
+    <h2>Progress log</h2>
+    <p class="sub">Only check something off once you can genuinely do all four: understand it, solve problems with it, build with it, and explain it to someone else. The date is stamped automatically — so a check-off today reads "today," and one from three months from now will read that date instead, not get bundled together.</p>
+  </div>
+
+  <div class="summary-bar">
+    <div class="count" id="count-display">Loading…</div>
+    <div class="bar-track"><div class="bar-fill" id="bar-fill"></div></div>
+    <button class="reset-btn" id="reset-btn" type="button">Clear my log</button>
+  </div>
+  <div class="storage-note" id="storage-note"></div>
+
+  <div id="checklist"></div>
+
+  <div class="activity-log">
+    <h3 style="font-size:1.05rem;">Recently logged</h3>
+    <ul id="activity-list"><li style="color:var(--ink-soft);">Nothing logged yet.</li></ul>
+  </div>
+</section>
+
+<footer>
+  Built from your CSE major, EC minor, and Honours plan — for personal use, not an official KTU or MIT document.<br>
+  <a href="https://ocw.mit.edu/" target="_blank" rel="noopener">MIT OCW</a> · <a href="https://nptel.ac.in" target="_blank" rel="noopener">NPTEL</a> · <a href="https://gate2027.iitm.ac.in" target="_blank" rel="noopener">GATE 2027</a>
+</footer>
+
+<script>
+(function(){
+  var GROUPS = [
+    { title: "P1 — Mathematics", items: [
+      ["p1-discrete","Discrete math — logic, sets, proofs, induction"],
+      ["p1-graph","Graph theory & combinatorics"],
+      ["p1-prob","Probability fundamentals"],
+      ["p1-linalg","Linear algebra fundamentals"]
+    ]},
+    { title: "P2 — Programming", items: [
+      ["p2-c","C fluency — pointers, memory, structs"],
+      ["p2-python","Python fluency"],
+      ["p2-oop","OOP in Java/C++"],
+      ["p2-gitlinux","Git + Linux shell as a daily habit"]
+    ]},
+    { title: "P3 — Algorithms", items: [
+      ["p3-ds","Core data structures — trees, heaps, hash tables"],
+      ["p3-sort","Sorting & searching, complexity analysis"],
+      ["p3-graphalgo","Graph algorithms — BFS/DFS/Dijkstra"],
+      ["p3-dp","Dynamic programming"],
+      ["p3-100","100+ DSA problems solved"]
+    ]},
+    { title: "P4 — Systems", items: [
+      ["p4-arch","Computer organisation & assembly basics"],
+      ["p4-osproc","OS — processes, threads, scheduling"],
+      ["p4-osvm","OS — virtual memory & file systems"],
+      ["p4-db","DBMS fundamentals — relational algebra, indexing, transactions"],
+      ["p4-net","Networking fundamentals — sockets, TCP, HTTP, DNS"],
+      ["p4-xv6","xv6 modified and shipped"]
+    ]},
+    { title: "P5 — AI", items: [
+      ["p5-classical","Classical ML — regression, trees, SVM, clustering"],
+      ["p5-nnscratch","Neural network implemented from scratch"],
+      ["p5-cnn","CNNs for vision"],
+      ["p5-transformer","Transformers & attention — the basics"],
+      ["p5-edgeai","One Edge-AI / TinyML model deployed on a microcontroller"]
+    ]},
+    { title: "P6 — Security", items: [
+      ["p6-crypto","Cryptography & authentication basics"],
+      ["p6-web","Web & network security basics"],
+      ["p6-ctf","One CTF or vulnerability-analysis exercise"]
+    ]},
+    { title: "P7 — EC / Embedded", items: [
+      ["p7-logic","Digital logic & circuits"],
+      ["p7-arduino","Arduino → ESP32 project shipped"],
+      ["p7-stm32","STM32 bare-metal C"],
+      ["p7-rtos","RTOS basics"],
+      ["p7-fpga","One FPGA exercise"]
+    ]},
+    { title: "P8 — Engineering practice", items: [
+      ["p8-linuxdocker","Linux + Docker basics"],
+      ["p8-cicd","CI/CD on a real repo"],
+      ["p8-cloud","One deployed / cloud-hosted project"]
+    ]},
+    { title: "P9 — Research", items: [
+      ["p9-read","First paper read & summarised"],
+      ["p9-reproduce","First paper reproduced"],
+      ["p9-flagship","Flagship research project shipped"]
+    ]},
+    { title: "GATE & career", items: [
+      ["g-gate28","GATE 2028 — trial attempt"],
+      ["g-gate29","GATE 2029 — main attempt"],
+      ["g-intern1","First internship landed"],
+      ["g-portfolio","Flagship portfolio — 8 repos complete"]
+    ]}
+  ];
+
+  var TOTAL = GROUPS.reduce(function(sum, g){ return sum + g.items.length; }, 0);
+  var data = {};
+  var storageOK = true;
+
+  var checklistEl = document.getElementById('checklist');
+  var countEl = document.getElementById('count-display');
+  var barEl = document.getElementById('bar-fill');
+  var activityEl = document.getElementById('activity-list');
+  var noteEl = document.getElementById('storage-note');
+
+  function formatDate(iso){
+    if(!iso) return '';
+    var d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  function todayISO(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,'0');
+    var day = String(d.getDate()).padStart(2,'0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+
+  function labelFor(id){
+    for(var g=0; g<GROUPS.length; g++){
+      for(var i=0; i<GROUPS[g].items.length; i++){
+        if(GROUPS[g].items[i][0] === id) return GROUPS[g].items[i][1];
+      }
+    }
+    return id;
+  }
+
+  function render(){
+    var done = Object.keys(data).length;
+    countEl.textContent = done + ' / ' + TOTAL + ' milestones logged';
+    barEl.style.width = Math.round((done/TOTAL)*100) + '%';
+
+    // checkboxes' checked state + stamps
+    GROUPS.forEach(function(g){
+      g.items.forEach(function(it){
+        var id = it[0];
+        var cb = document.getElementById('cb-'+id);
+        var stamp = document.getElementById('stamp-'+id);
+        if(!cb) return;
+        if(data[id]){
+          cb.checked = true;
+          stamp.textContent = 'Logged ' + formatDate(data[id]);
+        } else {
+          cb.checked = false;
+          stamp.textContent = '';
+        }
+      });
+    });
+
+    // activity list, most recent first
+    var entries = Object.keys(data).map(function(id){ return { id:id, date:data[id] }; });
+    entries.sort(function(a,b){ return b.date.localeCompare(a.date); });
+    if(entries.length === 0){
+      activityEl.innerHTML = '<li style="color:var(--ink-soft);">Nothing logged yet.</li>';
+    } else {
+      activityEl.innerHTML = entries.slice(0,12).map(function(e){
+        return '<li><span>'+labelFor(e.id)+'</span><span class="when">'+formatDate(e.date)+'</span></li>';
+      }).join('');
+    }
+  }
+
+  function buildChecklist(){
+    var html = '';
+    GROUPS.forEach(function(g){
+      html += '<div class="group-title">'+g.title+'</div>';
+      g.items.forEach(function(it){
+        var id = it[0], label = it[1];
+        html += '<label class="item" for="cb-'+id+'">'
+              + '<input type="checkbox" id="cb-'+id+'" data-id="'+id+'">'
+              + '<span class="item-label">'+label+'</span>'
+              + '<span class="stamp" id="stamp-'+id+'"></span>'
+              + '</label>';
+      });
+    });
+    checklistEl.innerHTML = html;
+
+    checklistEl.querySelectorAll('input[type=checkbox]').forEach(function(cb){
+      cb.addEventListener('change', function(){
+        var id = cb.getAttribute('data-id');
+        if(cb.checked){
+          data[id] = todayISO();
+        } else {
+          delete data[id];
+        }
+        render();
+        save();
+      });
+    });
+  }
+
+  function save(){
+    if(!storageOK) return;
+    try{
+      window.storage.set('progress-log', JSON.stringify(data), false).catch(function(){
+        storageOK = false;
+        noteEl.textContent = "Your progress isn't saving between visits right now — it'll still work for this session.";
+      });
+    }catch(e){
+      storageOK = false;
+      noteEl.textContent = "Your progress isn't saving between visits right now — it'll still work for this session.";
+    }
+  }
+
+  function load(){
+    buildChecklist();
+    try{
+      window.storage.get('progress-log', false).then(function(res){
+        if(res && res.value){
+          try{ data = JSON.parse(res.value) || {}; } catch(e){ data = {}; }
+        }
+        render();
+      }).catch(function(){
+        storageOK = false;
+        noteEl.textContent = "Starting a fresh log — saved progress from a previous visit couldn't be loaded.";
+        render();
+      });
+    }catch(e){
+      storageOK = false;
+      noteEl.textContent = "Progress saving isn't available in this view — checks will work for this session only.";
+      render();
+    }
+  }
+
+  document.getElementById('reset-btn').addEventListener('click', function(){
+    if(confirm('Clear every logged milestone? This can\'t be undone.')){
+      data = {};
+      render();
+      save();
+    }
+  });
+
+  load();
+})();
+</script>
+
+</body>
+</html>
